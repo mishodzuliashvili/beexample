@@ -211,7 +211,7 @@ const DashboardContent = ({ user }: DashboardContentProps) => {
                                     htmlFor="content"
                                     className="block text-sm font-medium text-gray-700 mb-2"
                                 >
-                                    What's on your mind?
+                                    {` What's on your mind?`}
                                 </label>
                                 <textarea
                                     id="content"
