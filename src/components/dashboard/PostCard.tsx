@@ -45,7 +45,9 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
           reactionButtonRef.current &&
           !reactionButtonRef.current.contains(event.target as Node)
       ) {
-        setShowReactionSelector(false);
+        setTimeout(() => {
+          setShowReactionSelector(false);
+        }, 100);
       }
     };
 
@@ -216,8 +218,13 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
             <div className="relative">
               <button
                   ref={reactionButtonRef}
-                  onClick={() => userHasReacted ? handleReaction(userReactionType) : setShowReactionSelector(!showReactionSelector)}
-                  // Use onPointerEnter for better cross-device support (mouse, touch, pen)
+                  onClick={() => {
+                    if (userHasReacted) {
+                      void handleReaction(userReactionType);
+                    } else {
+                      setShowReactionSelector(!showReactionSelector);
+                    }
+                  }}
                   onPointerEnter={() => !userHasReacted && setShowReactionSelector(true)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors duration-200 ${
                       userHasReacted
@@ -242,7 +249,10 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
                     {(["LIKE", "LOVE", "LAUGH", "STAR", "TROPHY"] as string[]).map((type) => (
                         <button
                             key={type}
-                            onClick={() => handleReaction(type)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              void handleReaction(type);
+                            }}
                             className={`p-2 rounded-full transition-transform hover:scale-125 ${
                                 userHasReacted && userReactionType === type ? getReactionColor(type) : "hover:bg-gray-100"
                             }`}

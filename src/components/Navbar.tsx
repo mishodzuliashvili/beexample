@@ -8,7 +8,7 @@ import {
     ChevronDown,
     LogOut,
     Settings,
-    LifeBuoy,
+    LifeBuoy, Users,
 } from "lucide-react";
 import SignInButton from "./SignInButton";
 import SignOutButton from "@/components/SignOutButton";
@@ -145,16 +145,6 @@ const Navbar = () => {
                                     </div>
                                     <div className="py-1">
                                         <Link
-                                            href="/profile"
-                                            className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                            onClick={() =>
-                                                setProfileDropdownOpen(false)
-                                            }
-                                        >
-                                            <User className="w-4 h-4 mr-2" />
-                                            Your Profile
-                                        </Link>
-                                        <Link
                                             href="/edit-profile"
                                             className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                             onClick={() =>
@@ -178,6 +168,18 @@ const Navbar = () => {
                                                 Admin
                                             </Link>
                                         )}
+                                        <Link
+                                            href="/groups"
+                                            className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                            onClick={() =>
+                                                setProfileDropdownOpen(
+                                                    false
+                                                )
+                                            }
+                                        >
+                                            <Users className="w-4 h-4 mr-2"/>
+                                            Groups
+                                        </Link>
                                         <div className="border-t border-gray-100">
                                             <SignOutButton className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 <LogOut className="w-4 h-4 mr-2" />
