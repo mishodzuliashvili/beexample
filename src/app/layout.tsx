@@ -7,6 +7,7 @@ import Script from "next/script";
 import { env } from "@/lib/env";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { getUser } from "@/lib/auth";
+import BlockedUserPage from "./BlockedUserPage";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default async function RootLayout({
     const user =
         (await getUser({
             role: true,
+            status: true,
         })) ?? null;
 
     return (
@@ -49,7 +51,10 @@ export default async function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <AuthProvider user={user}>{children}</AuthProvider>
+                <AuthProvider user={user}>
+                    {((user && user.status === "ACTIVE") || !user) && children}
+                    {user && user.status === "BANNED" && <BlockedUserPage />}
+                </AuthProvider>
             </body>
             {env.NODE_ENV === "production" && (
                 <Script
