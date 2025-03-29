@@ -38,9 +38,10 @@ async function getGroup(id: string) {
 export default async function GroupDetailPage({
     params,
 }: {
-    params: { id: string };
+    params: Promise<{ id: string }>;
 }) {
-    const group = await getGroup(params.id);
+    const id = (await params).id;
+    const group = await getGroup(id);
 
     if (!group) {
         notFound();
