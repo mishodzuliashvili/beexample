@@ -39,24 +39,17 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const user = (await getUser({})) ?? null;
+    const user =
+        (await getUser({
+            role: true,
+        })) ?? null;
 
     return (
         <html lang="en">
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <AuthProvider user={user}>
-                    <div className="min-h-screen grid grid-rows-[auto,1fr,auto] grid-cols-1">
-                        <div>
-                            <Navbar />
-                        </div>
-                        <main className="mt-20">{children}</main>
-                        <div>
-                            <Footer />
-                        </div>
-                    </div>
-                </AuthProvider>
+                <AuthProvider user={user}>{children}</AuthProvider>
             </body>
             {env.NODE_ENV === "production" && (
                 <Script

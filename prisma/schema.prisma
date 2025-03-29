@@ -13,6 +13,11 @@ enum UserStatus {
   SUSPENDED
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model User {
   id String @id() @default(cuid())
 
@@ -20,7 +25,101 @@ model User {
   email  String     @unique()
   image  String
   status UserStatus @default(ACTIVE)
+  role   UserRole   @default(USER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
+
+  ownedGroups  OwnedGroup[]
+  joinedGroups GroupMember[]
+  posts        Post[]
+  reactions    Reaction[]
+}
+
+enum PostType {
+  MOTIVATIONAL
+  ACHIEVEMENT
+}
+
+model Group {
+  id String @id() @default(cuid())
+
+  name  String
+  slug  String @unique
+  image String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  members GroupMember[]
+  owner   OwnedGroup[]
+  posts   Post[]
+}
+
+model OwnedGroup {
+  id String @id() @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+enum GroupMemberStatus {
+  ACTIVE
+  BANNED
+  SUSPENDED
+  PEDNING
+}
+
+model GroupMember {
+  id String @id() @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  status GroupMemberStatus @default(PEDNING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+}
+
+model Post {
+  id String @id() @default(cuid())
+
+  content String
+  type    PostType
+  image   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  author    User       @relation(fields: [authorId], references: [id])
+  authorId  String
+  reactions Reaction[]
+}
+
+model Reaction {
+  id String @id() @default(cuid())
+
+  type String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

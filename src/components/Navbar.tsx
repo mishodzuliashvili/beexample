@@ -8,6 +8,7 @@ import {
     ChevronDown,
     LogOut,
     Settings,
+    LifeBuoy,
 } from "lucide-react";
 import SignInButton from "./SignInButton";
 import SignOutButton from "@/components/SignOutButton";
@@ -163,6 +164,20 @@ const Navbar = () => {
                                             <Settings className="w-4 h-4 mr-2" />
                                             Settings
                                         </Link>
+                                        {user.role === "ADMIN" && (
+                                            <Link
+                                                href="/admin"
+                                                className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                onClick={() =>
+                                                    setProfileDropdownOpen(
+                                                        false
+                                                    )
+                                                }
+                                            >
+                                                <LifeBuoy className="w-4 h-4 mr-2" />
+                                                Admin
+                                            </Link>
+                                        )}
                                         <div className="border-t border-gray-100">
                                             <SignOutButton className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                                 <LogOut className="w-4 h-4 mr-2" />
@@ -297,6 +312,20 @@ const Navbar = () => {
                                                 <Settings className="w-5 h-5 mr-3" />
                                                 Settings
                                             </Link>
+                                            {user.role === "ADMIN" && (
+                                                <Link
+                                                    href="/admin"
+                                                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                                    onClick={() =>
+                                                        setProfileDropdownOpen(
+                                                            false
+                                                        )
+                                                    }
+                                                >
+                                                    <LifeBuoy className="w-4 h-4 mr-2" />
+                                                    Admin
+                                                </Link>
+                                            )}
                                             <SignOutButton className="flex items-center w-full px-4 py-2 mt-4 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
                                                 <LogOut className="w-5 h-5 mr-2" />
                                                 Sign out
