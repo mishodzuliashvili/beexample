@@ -2,51 +2,54 @@
 
 import React, { useState } from "react";
 import {
-    Zap,
-    Clock,
-    Bell,
+    Sparkles,
+    BookOpen,
+    GraduationCap,
+    Brain,
     Users,
     Shield,
-    Sparkles,
-    HeartHandshake,
-    MessagesSquare,
+    Zap,
+    Clock,
+    MessageSquare,
     Smartphone,
+    Award,
+    LineChart,
 } from "lucide-react";
 
 const FeaturesSection = () => {
-    const [activeTab, setActiveTab] = useState<any>("instant");
+    const [activeTab, setActiveTab] = useState<any>("knowledge");
 
     const features = {
-        instant: {
-            title: "Lightning Fast Updates",
+        knowledge: {
+            title: "Knowledge Building",
             description:
-                "Share your status in seconds, not minutes. Quick taps and intuitive gestures make staying in touch effortless.",
-            icon: <Zap className="h-6 w-6" />,
-            color: "bg-orange-500",
-            demo: ["One tap to open", "Choose your status", "Instantly shared"],
+                "Discover and share bite-sized educational content that's easy to digest. Build your knowledge repository one daily insight at a time.",
+            icon: <Brain className="h-6 w-6" />,
+            color: "bg-indigo-500",
+            demo: ["Capture key insights", "Track learning streaks", "Build a knowledge portfolio"],
         },
-        notifications: {
-            title: "Smart Notifications",
+        community: {
+            title: "Learning Communities",
             description:
-                "Notifications that respect your time. Get updates from your circle in perfect order, exactly when you want them.",
-            icon: <Bell className="h-6 w-6" />,
-            color: "bg-blue-500",
+                "Join subject-based communities filled with passionate learners. Connect with peers studying the same topics and accelerate your learning together.",
+            icon: <Users className="h-6 w-6" />,
+            color: "bg-green-500",
             demo: [
-                "Linearized delivery",
-                "Priority controls",
-                "Custom quiet hours",
+                "Topic-specific groups",
+                "Expert-led discussions",
+                "Collaborative learning",
             ],
         },
-        connections: {
-            title: "Meaningful Connections",
+        tracking: {
+            title: "Learning Progress",
             description:
-                "Build your circle thoughtfully. Focus on the people who matter most, without the noise of a massive network.",
-            icon: <HeartHandshake className="h-6 w-6" />,
-            color: "bg-pink-500",
+                "Track your educational journey with intuitive analytics. See your growth over time and identify areas for further exploration.",
+            icon: <LineChart className="h-6 w-6" />,
+            color: "bg-blue-500",
             demo: [
-                "Curated circles",
-                "Rich status options",
-                "Direct interactions",
+                "Visual learning paths",
+                "Subject mastery tracking",
+                "Knowledge gap analysis",
             ],
         },
     } as any;
@@ -58,16 +61,14 @@ const FeaturesSection = () => {
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-blue-50 text-blue-600 mb-8">
                         <Sparkles className="h-4 w-4" />
-                        Powerful Features
+                        Learning Features
                     </div>
                     <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-6">
-                        Everything you need, <br />
-                        {`nothing you don't`}
+                        Tools for your <br />
+                        educational journey
                     </h2>
                     <p className="text-lg leading-8 text-gray-600">
-                        Keep your circle close without getting lost in endless
-                        feeds and notifications. Simple, focused features that
-                        help you stay connected.
+                        BeExample provides everything you need to share your learning, discover new insights, and grow with a community of curious minds.
                     </p>
                 </div>
 
@@ -80,10 +81,10 @@ const FeaturesSection = () => {
                                 onClick={() => setActiveTab(key)}
                                 className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all duration-200
                                     ${
-                                        activeTab === key
-                                            ? `${feature.color} text-white shadow-lg scale-105`
-                                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                                    }`}
+                                    activeTab === key
+                                        ? `${feature.color} text-white shadow-lg scale-105`
+                                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                }`}
                             >
                                 {feature.icon}
                                 <span className="font-medium">
@@ -136,41 +137,140 @@ const FeaturesSection = () => {
                                 {/* Phone Frame */}
                                 <div className="mx-auto w-[280px] h-[580px] bg-gray-900 rounded-[3rem] p-4 shadow-xl">
                                     <div className="relative bg-white w-full h-full rounded-[2.5rem] overflow-hidden">
-                                        {/* <div className="absolute top-0 inset-x-0 h-6 bg-gray-900 rounded-b-xl" /> */}
-
                                         {/* Demo Content */}
                                         <div className="pt-8 px-4">
                                             <div className="flex items-center justify-between mb-6">
                                                 <h4 className="font-semibold">
-                                                    Your Circle
+                                                    {activeTab === "knowledge" ? "Today's Learning" :
+                                                        activeTab === "community" ? "Your Communities" :
+                                                            "Learning Progress"}
                                                 </h4>
                                                 <button className="bg-blue-100 p-2 rounded-full">
-                                                    <Users className="h-4 w-4 text-blue-600" />
+                                                    {activeTab === "knowledge" ?
+                                                        <BookOpen className="h-4 w-4 text-blue-600" /> :
+                                                        activeTab === "community" ?
+                                                            <Users className="h-4 w-4 text-blue-600" /> :
+                                                            <LineChart className="h-4 w-4 text-blue-600" />
+                                                    }
                                                 </button>
                                             </div>
 
                                             {/* Status Cards */}
-                                            {[1, 2, 3].map((item) => (
-                                                <div
-                                                    key={item}
-                                                    className={`mb-3 p-4 rounded-xl shadow-sm transition-all duration-300
-                                                        ${
-                                                            activeTab ===
-                                                            "instant"
-                                                                ? "bg-orange-50"
-                                                                : activeTab ===
-                                                                  "notifications"
-                                                                ? "bg-blue-50"
-                                                                : "bg-pink-50"
-                                                        }`}
-                                                >
-                                                    <div className="flex items-center gap-3 mb-2">
-                                                        <div className="h-8 w-8 rounded-full bg-gray-200" />
-                                                        <div className="h-3 w-24 bg-gray-200 rounded" />
+                                            {activeTab === "knowledge" && (
+                                                <>
+                                                    <div className="mb-3 p-4 rounded-xl bg-indigo-50 shadow-sm">
+                                                        <div className="flex items-center gap-3 mb-2">
+                                                            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                                <BookOpen className="h-5 w-5 text-indigo-600" />
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-medium">Web Development</div>
+                                                                <div className="text-xs text-gray-500">5 min ago</div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-sm text-gray-700">Learned how to implement authentication with JWT tokens for secure API access.</p>
                                                     </div>
-                                                    <div className="h-2 w-32 bg-gray-200 rounded" />
+                                                    <div className="mb-3 p-4 rounded-xl bg-indigo-50 shadow-sm">
+                                                        <div className="flex items-center gap-3 mb-2">
+                                                            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
+                                                                <Brain className="h-5 w-5 text-indigo-600" />
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-medium">Machine Learning</div>
+                                                                <div className="text-xs text-gray-500">2 hrs ago</div>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-sm text-gray-700">Discovered how decision trees split data to make predictions based on feature values.</p>
+                                                    </div>
+                                                </>
+                                            )}
+
+                                            {activeTab === "community" && (
+                                                <>
+                                                    <div className="mb-3 p-4 rounded-xl bg-green-50 shadow-sm">
+                                                        <div className="flex items-center gap-3 mb-2">
+                                                            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                                                <Users className="h-5 w-5 text-green-600" />
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-medium">Data Science Hub</div>
+                                                                <div className="text-xs text-gray-500">253 members</div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-xs text-gray-500">12 new posts today</span>
+                                                            <button className="text-xs bg-green-100 px-2 py-1 rounded-full text-green-600">View</button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="mb-3 p-4 rounded-xl bg-green-50 shadow-sm">
+                                                        <div className="flex items-center gap-3 mb-2">
+                                                            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                                                <Users className="h-5 w-5 text-green-600" />
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-medium">UX Designers</div>
+                                                                <div className="text-xs text-gray-500">175 members</div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-xs text-gray-500">5 new posts today</span>
+                                                            <button className="text-xs bg-green-100 px-2 py-1 rounded-full text-green-600">View</button>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )}
+
+                                            {activeTab === "tracking" && (
+                                                <div className="space-y-4">
+                                                    <div className="p-4 rounded-xl bg-blue-50 shadow-sm">
+                                                        <h5 className="font-medium mb-2">Learning Streak</h5>
+                                                        <div className="flex gap-1">
+                                                            {[1, 2, 3, 4, 5, 6, 7].map((day) => (
+                                                                <div
+                                                                    key={day}
+                                                                    className={`h-8 w-8 rounded-md flex items-center justify-center ${day < 6 ? 'bg-blue-200 text-blue-700' : 'bg-gray-200 text-gray-400'}`}
+                                                                >
+                                                                    {day}
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        <div className="mt-2 text-xs text-gray-500">5 day streak! Keep going!</div>
+                                                    </div>
+
+                                                    <div className="p-4 rounded-xl bg-blue-50 shadow-sm">
+                                                        <h5 className="font-medium mb-2">Subject Progress</h5>
+                                                        <div className="space-y-2">
+                                                            <div>
+                                                                <div className="flex justify-between text-xs mb-1">
+                                                                    <span>Web Development</span>
+                                                                    <span>78%</span>
+                                                                </div>
+                                                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                                                    <div className="bg-blue-600 h-2 rounded-full" style={{width: '78%'}}></div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="flex justify-between text-xs mb-1">
+                                                                    <span>UX Design</span>
+                                                                    <span>45%</span>
+                                                                </div>
+                                                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                                                    <div className="bg-blue-600 h-2 rounded-full" style={{width: '45%'}}></div>
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                <div className="flex justify-between text-xs mb-1">
+                                                                    <span>Machine Learning</span>
+                                                                    <span>23%</span>
+                                                                </div>
+                                                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                                                    <div className="bg-blue-600 h-2 rounded-full" style={{width: '23%'}}></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            ))}
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -193,22 +293,22 @@ const FeaturesSection = () => {
                 <div className="mt-24 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {[
                         {
-                            icon: Clock,
-                            title: "Time-Saving",
+                            icon: GraduationCap,
+                            title: "Learning Focused",
                             description:
-                                "Update your status in seconds, not minutes. Quick actions that respect your schedule.",
+                                "Every feature is designed to enhance your educational journey. No distractions, just pure knowledge sharing and acquisition.",
                         },
                         {
                             icon: Shield,
-                            title: "Privacy First",
+                            title: "Privacy Conscious",
                             description:
-                                "Your data stays private. Share only what you want, with who you want.",
+                                "We only collect what's necessary for your learning journey. Share only with communities you choose to join.",
                         },
                         {
-                            icon: Smartphone,
-                            title: "Always Available",
+                            icon: Award,
+                            title: "Achievement Driven",
                             description:
-                                "Access your circle from any device. Stay connected wherever you are.",
+                                "Earn badges, track streaks, and build your learning portfolio as you grow on your educational journey.",
                         },
                     ].map((benefit, index) => (
                         <div

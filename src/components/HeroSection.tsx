@@ -4,12 +4,13 @@ import {
     Bell,
     X,
     Menu,
-    Smile,
+    BookOpen,
     Heart,
-    Coffee,
-    Sun,
-    Moon,
-    ActivitySquare,
+    Lightbulb,
+    PenTool,
+    Sparkles,
+    GraduationCap,
+    BookMarked,
 } from "lucide-react";
 import Link from "next/link";
 import SignInButton from "./SignInButton";
@@ -21,44 +22,43 @@ const BeExampleLanding = () => {
     const statuses = [
         {
             id: 1,
-            icon: Smile,
-            label: "I'm doing great!",
-            color: "bg-green-500",
-            position: "left-[15%] top-[25%] rotate-3",
-            message: "Awesome! Spreading those positive vibes to your circle!",
+            icon: BookOpen,
+            label: "Learned something new!",
+            color: "bg-blue-500",
+            position: "left-[10%] top-[28%] rotate-3",
+            message: "Amazing! Your insight will inspire others in your circle!",
         },
         {
             id: 2,
-            icon: Heart,
-            label: "Feeling loved",
-            color: "bg-pink-500",
-            position: "left-[55%] top-[23%] -rotate-6",
-            message:
-                "Love is in the air! Your circle will be happy to hear that!",
+            icon: Lightbulb,
+            label: "Had an insight",
+            color: "bg-amber-500",
+            position: "left-[57%] top-[20%] -rotate-6",
+            message: "Brilliant! Share your eureka moment with your community!",
         },
         {
             id: 3,
-            icon: Coffee,
-            label: "Just busy",
-            color: "bg-amber-500",
-            position: "left-[20%] top-[50%] rotate-6",
-            message: "Gotcha! Your circle knows you're grinding!",
+            icon: PenTool,
+            label: "Created something",
+            color: "bg-indigo-500",
+            position: "left-[20%] top-[54%] rotate-6",
+            message: "Wonderful! Your creation will motivate others to build too!",
         },
         {
             id: 4,
-            icon: Sun,
-            label: "Having fun",
-            color: "bg-yellow-500",
-            position: "left-[54%] top-[50%] -rotate-3",
-            message: "Woohoo! Your circle is happy you're having a blast!",
+            icon: BookMarked,
+            label: "Finished a course",
+            color: "bg-green-500",
+            position: "left-[56%] top-[40%] -rotate-3",
+            message: "Congratulations! Your achievement is an example to follow!",
         },
         {
             id: 5,
-            icon: Moon,
-            label: "Getting rest",
-            color: "bg-indigo-500",
-            position: "left-[35%] top-[74%] rotate-2",
-            message: "Rest well! Your circle knows you're recharging!",
+            icon: GraduationCap,
+            label: "Mastered a skill",
+            color: "bg-purple-500",
+            position: "left-[45%] top-[74%] -rotate-2",
+            message: "Impressive! Your journey will inspire others to learn!",
         },
     ];
 
@@ -79,25 +79,21 @@ const BeExampleLanding = () => {
                 {/* Left side - Text content */}
                 <div className="text-left">
                     <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-blue-50 text-blue-600 mb-8">
-                        <Bell className="h-4 w-4" />
-                        #1 Product of the Day
+                        <GraduationCap className="h-4 w-4" />
+                        Learn. Share. Inspire.
                     </div>
 
                     <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-8">
-                        I am from Luka. HI Quick check-ins for{" "}
-                        <span className="text-blue-600">busy people</span>
+                        Daily learning with <span className="text-blue-600">your community</span>
                     </h1>
 
                     <p className="text-xl leading-8 text-gray-600 mb-10">
-                        BeExample lets you stay connected with friends and
-                        family without interrupting your day. One tap sends a
-                        quick update, keeping everyone connected while you stay
-                        focused on what matters.
+                        BeExample turns learning into a social experience. Share one educational insight daily, explore what others are learning, and grow together with like-minded learners in your community.
                     </p>
 
                     <div className="flex items-center gap-x-6">
                         <SignInButton className="rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg hover:bg-blue-500 transition-all duration-200 hover:scale-105">
-                            Get Started
+                            Become Example
                         </SignInButton>
                         <Link
                             href="#howitworks"
@@ -111,7 +107,7 @@ const BeExampleLanding = () => {
                     </div>
                 </div>
 
-                {/* Right side - Interactive Status Selector */}
+                {/* Right side - Interactive Learning Status Selector */}
                 <div className="">
                     <div className="hidden md:block relative h-[400px] mb-8 ">
                         {/* Decorative background circles */}
@@ -138,10 +134,10 @@ const BeExampleLanding = () => {
                                     flex items-center justify-center gap-3 px-6 py-4 rounded-xl 
                                     transition-all duration-300 hover:scale-110 hover:rotate-0
                                     ${
-                                        selectedStatus?.id === status.id
-                                            ? `${status.color} text-white shadow-lg scale-110 z-10`
-                                            : "bg-white hover:bg-gray-50 text-gray-700 shadow-md"
-                                    }`}
+                                    selectedStatus?.id === status.id
+                                        ? `${status.color} text-white shadow-lg scale-110 z-10`
+                                        : "bg-white hover:bg-gray-50 text-gray-700 shadow-md"
+                                }`}
                             >
                                 <status.icon
                                     className={`h-6 w-6 ${
@@ -166,10 +162,10 @@ const BeExampleLanding = () => {
                                     flex items-center justify-center gap-3 px-6 py-4 rounded-xl 
                                     transition-all duration-300 w-full mb-2
                                     ${
-                                        selectedStatus?.id === status.id
-                                            ? `${status.color} text-white shadow-lg scale-105 z-10`
-                                            : "bg-white hover:bg-gray-50 text-gray-700 shadow-md"
-                                    }`}
+                                    selectedStatus?.id === status.id
+                                        ? `${status.color} text-white shadow-lg scale-105 z-10`
+                                        : "bg-white hover:bg-gray-50 text-gray-700 shadow-md"
+                                }`}
                             >
                                 <status.icon
                                     className={`h-6 w-6 ${
@@ -193,16 +189,16 @@ const BeExampleLanding = () => {
                         >
                             {selectedStatus ? (
                                 <div className="flex items-center justify-center gap-2 px-6 py-4 rounded-xl shadow-md bg-blue-100 text-blue-600 w-full">
-                                    <ActivitySquare className="h-5 w-5" />
+                                    <Sparkles className="h-5 w-5" />
                                     <span className="font-medium">
                                         {selectedStatus.message}
                                     </span>
                                 </div>
                             ) : (
-                                <div className="flex items-center justify-center gap-2 px-6 py-4 bg-blue-100 text-blue-600 rounded-xl shadow-md w-full">
-                                    <ActivitySquare className="h-5 w-5" />
+                                <div className="flex items-center justify-center gap-2 px-6 py-4 bg-blue-100 text-blue-600 rounded-xl shadow-md">
+                                    <Sparkles className="h-5 w-5" />
                                     <span className="font-medium">
-                                        Try it now - How are you feeling?
+                                        Share today&apos;s learning!
                                     </span>
                                 </div>
                             )}
