@@ -20,7 +20,7 @@
 | Layer            | Tech                        |
 |------------------|-----------------------------|
 | Frontend         | [Next.js](https://nextjs.org/)  |
-| UI Components    | [shadcn/ui](https://ui.shadcn.com/) |
+| UI Components    | TailwindCSS |
 | Auth             | [Kinde](https://kinde.com/)       |
 | Backend ORM      | [Prisma](https://www.prisma.io/)  |
 | Database         | PostgreSQL                   |
