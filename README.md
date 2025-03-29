@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 BeExample
 
-## Getting Started
+**BeExample** is a social learning platform that lets university students share daily achievements, insights, and educational progress with their community — in just one tap. It's about celebrating growth, motivating others, and building a shared learning culture.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+- 🧠 **Daily Learning Posts** — Share what you learned, built, or completed each day.
+- 💬 **Motivational Prompts** — Encouraging messages for every action you post.
+- 🎨 **Modern UI** — Built with TailwindCSS, responsive and animated for an engaging experience.
+- 🔐 **Authentication** — Secure login with [Kinde](https://kinde.com/).
+- 📊 **Analytics** — Integrated with Umami for privacy-friendly user tracking.
+- 🚫 **User Moderation** — Banned users are blocked from using the platform.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer            | Tech                        |
+|------------------|-----------------------------|
+| Frontend         | [Next.js](https://nextjs.org/)  |
+| UI Components    | [shadcn/ui](https://ui.shadcn.com/) |
+| Auth             | [Kinde](https://kinde.com/)       |
+| Backend ORM      | [Prisma](https://www.prisma.io/)  |
+| Database         | PostgreSQL                   |
+| Deployment       | Docker + Caddy + Hetzner     |
+| CDN / Proxy      | [Cloudflare](https://www.cloudflare.com/) |
+| Analytics        | [Umami](https://umami.is/) (self-hosted) |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/mishodzuliashvili/beexample.git
+cd beexample
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Set up `.env`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env` file based on `.env.example` and provide values
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Install dependencies
 
-## Learn More
+```bash
+pnpm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Run locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🐳 Docker Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This app is production-ready and can be deployed with Docker.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🌍 Deployment Notes
+
+- **Hetzner** is used as the hosting provider.
+- **Caddy** is configured as a reverse proxy with automatic HTTPS.
+- **Cloudflare** handles DNS and CDN-level caching.
+
+<!-- ---
+
+## 📸 Screenshots
+
+> Add some screenshots or a demo link here once available! -->
+---
+
+## 🧠 Inspiration
+
+BeExample aims to turn **learning into a shared journey**. Whether you’ve had a breakthrough, completed a course, or learned a new concept, you can celebrate progress and build habits together with others.
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first.
