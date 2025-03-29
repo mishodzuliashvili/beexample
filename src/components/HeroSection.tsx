@@ -84,7 +84,7 @@ const BeExampleLanding = () => {
                     </div>
 
                     <h1 className="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-8">
-                        Quick check-ins for{" "}
+                        HI Quick check-ins for{" "}
                         <span className="text-blue-600">busy people</span>
                     </h1>
 
