@@ -59,3 +59,68 @@ export async function createGroup(formData: FormData) {
     return { error: "Failed to create group. Please try again." };
   }
 }
+
+
+export async function joinGroup(groupId: string) {
+    const user = await getUser({});
+    
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+  
+    const existingMembership = await prisma.groupMember.findFirst({
+      where: {
+        userId: user.id,
+        groupId: groupId,
+      },
+    });
+  
+    if (existingMembership) {
+      throw new Error("Already a member or pending");
+    }
+  
+    await prisma.groupMember.create({
+      data: {
+        userId: user.id,
+        groupId: groupId,
+        status: "PEDNING",
+      },
+    });
+  
+    revalidatePath("/groups");
+  }
+  
+  export async function leaveGroup(groupId: string) {
+    const user = await getUser({});
+    
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+  
+    await prisma.groupMember.deleteMany({
+      where: {
+        userId: user.id,
+        groupId: groupId,
+      },
+    });
+  
+    revalidatePath("/groups");
+  }
+  
+  export async function cancelJoinRequest(groupId: string) {
+    const user = await getUser({});
+    
+    if (!user) {
+      throw new Error("Unauthorized");
+    }
+  
+    await prisma.groupMember.deleteMany({
+      where: {
+        userId: user.id,
+        groupId: groupId,
+        status: "PEDNING",
+      },
+    });
+  
+    revalidatePath("/groups");
+  }
