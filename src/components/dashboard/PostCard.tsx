@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { formatDistanceToNow } from "date-fns";
-import { Heart, Award, Flame, User as UserIcon, ThumbsUp, Star, Laugh, Trophy, Smile } from "lucide-react";
+import { Heart, Award, Flame, User as UserIcon, ThumbsUp, Star, Laugh, Trophy } from "lucide-react";
 import { User, Post, PostType } from "@prisma/client";
 import { createReaction, removeReaction } from "@/actions/post";
 
@@ -45,9 +45,7 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
           reactionButtonRef.current &&
           !reactionButtonRef.current.contains(event.target as Node)
       ) {
-        setTimeout(() => {
-          setShowReactionSelector(false);
-        }, 100);
+        setShowReactionSelector(false);
       }
     };
 
@@ -225,7 +223,6 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
                       setShowReactionSelector(!showReactionSelector);
                     }
                   }}
-                  onPointerEnter={() => !userHasReacted && setShowReactionSelector(true)}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors duration-200 ${
                       userHasReacted
                           ? getReactionColor(userReactionType)
@@ -243,16 +240,12 @@ const PostCard = ({ post, currentUser, hasReacted, reactionType = "LIKE" }: Post
               {showReactionSelector && (
                   <div
                       ref={reactionSelectorRef}
-                      className="absolute left-0 bottom-12 z-10 flex items-center space-x-1 bg-white rounded-full shadow-lg p-2 border border-gray-200 transition-opacity"
-                      onPointerLeave={() => setShowReactionSelector(false)}
+                      className="absolute left-0 bottom-12 z-10 flex items-center space-x-1 bg-white rounded-full shadow-lg p-2 border border-gray-200"
                   >
                     {(["LIKE", "LOVE", "LAUGH", "STAR", "TROPHY"] as string[]).map((type) => (
                         <button
                             key={type}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              void handleReaction(type);
-                            }}
+                            onClick={() => void handleReaction(type)}
                             className={`p-2 rounded-full transition-transform hover:scale-125 ${
                                 userHasReacted && userReactionType === type ? getReactionColor(type) : "hover:bg-gray-100"
                             }`}
