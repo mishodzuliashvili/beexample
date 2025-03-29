@@ -189,22 +189,24 @@ const Navbar = () => {
                             )}
                         </div>
                     ) : (
-                        <SignInButton className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <SignInButton className="hidden lg:inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             Sign in
                         </SignInButton>
                     )}
 
                     {/* Mobile menu button */}
-                    <div className="flex lg:hidden">
-                        <button
-                            type="button"
-                            className="inline-flex items-center justify-center p-2 text-gray-700 rounded-md hover:bg-gray-100"
-                            onClick={() => setMobileMenuOpen(true)}
-                        >
-                            <span className="sr-only">Open main menu</span>
-                            <Menu className="w-6 h-6" />
-                        </button>
-                    </div>
+                    {!user && (
+                        <div className="flex lg:hidden">
+                            <button
+                                type="button"
+                                className="inline-flex items-center justify-center p-2 text-gray-700 rounded-md hover:bg-gray-100"
+                                onClick={() => setMobileMenuOpen(true)}
+                            >
+                                <span className="sr-only">Open main menu</span>
+                                <Menu className="w-6 h-6" />
+                            </button>
+                        </div>
+                    )}
                 </div>
             </nav>
 

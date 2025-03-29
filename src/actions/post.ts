@@ -28,21 +28,21 @@ async function saveImage(file: File): Promise<string> {
 
 export async function createPost(formData: FormData) {
   const user = await getUser({});
-  
+
   if (!user) {
     throw new Error("Unauthorized");
   }
-  
+
   const groupId = formData.get("groupId") as string;
   const content = formData.get("content") as string;
   const type = formData.get("type") as string;
   const imageFile = formData.get("image") as File | null;
-  
+
   // Validate input
   if (!groupId || !content || !type) {
     throw new Error("Missing required fields");
   }
-  
+
   // Check if user is member of group
   const isMember = await prisma.groupMember.findFirst({
     where: {
@@ -51,17 +51,17 @@ export async function createPost(formData: FormData) {
       status: "ACTIVE"
     }
   });
-  
+
   if (!isMember) {
     throw new Error("You are not a member of this group");
   }
-  
+
   // Check if user already posted today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
-  
+
   const existingPost = await prisma.post.findFirst({
     where: {
       authorId: user.id,
@@ -72,17 +72,17 @@ export async function createPost(formData: FormData) {
       }
     }
   });
-  
+
   // if (existingPost) {
   //   throw new Error("You already posted in this group today");
   // }
-  
+
   // Save image if provided
   let imageUrl = null;
   if (imageFile && type === "MOTIVATIONAL") {
     imageUrl = await saveImage(imageFile);
   }
-  
+
   // Create post
   const post = await prisma.post.create({
     data: {
@@ -97,18 +97,18 @@ export async function createPost(formData: FormData) {
       }
     }
   });
-  
+
   revalidatePath("/dashboard");
   return post;
 }
 
 export async function createReaction({ postId, type }: { postId: string, type: string }) {
   const user = await getUser({});
-  
+
   if (!user) {
     throw new Error("Unauthorized");
   }
-  
+
   // Check if user already reacted to this post
   const existingReaction = await prisma.reaction.findFirst({
     where: {
@@ -116,11 +116,11 @@ export async function createReaction({ postId, type }: { postId: string, type: s
       userId: user.id
     }
   });
-  
-  if (existingReaction) {
-    throw new Error("You already reacted to this post");
-  }
-  
+
+  // if (existingReaction) {
+  //   throw new Error("You already reacted to this post");
+  // }
+
   // Create reaction
   const reaction = await prisma.reaction.create({
     data: {
@@ -133,7 +133,38 @@ export async function createReaction({ postId, type }: { postId: string, type: s
       }
     }
   });
-  
+
   revalidatePath("/dashboard");
   return reaction;
+}
+
+// New function to remove a reaction (unlike)
+export async function removeReaction({ postId }: { postId: string }) {
+  const user = await getUser({});
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  // Check if user has a reaction to remove
+  const existingReaction = await prisma.reaction.findFirst({
+    where: {
+      postId,
+      userId: user.id
+    }
+  });
+
+  if (!existingReaction) {
+    throw new Error("No reaction found to remove");
+  }
+
+  // Delete the reaction
+  await prisma.reaction.delete({
+    where: {
+      id: existingReaction.id
+    }
+  });
+
+  revalidatePath("/dashboard");
+  return { success: true };
 }

@@ -1,4 +1,3 @@
-// app/actions/user.ts
 "use server";
 
 import { prisma } from "@/lib/prisma";
@@ -89,6 +88,16 @@ export async function getUserFeed(options: FeedOptions = {}) {
                     image: true,
                 },
             },
+            reactions: {
+                where: {
+                    userId: user.id,
+                },
+                select: {
+                    id: true,
+                    type: true,  // Explicitly select the type field
+                },
+                take: 1,
+            },
             _count: {
                 select: {
                     reactions: true,
@@ -101,5 +110,12 @@ export async function getUserFeed(options: FeedOptions = {}) {
         take: 50,
     });
 
-    return posts;
+    // Transform the posts to include hasReacted flag and reaction type
+    return posts.map(post => ({
+        ...post,
+        hasReacted: post.reactions.length > 0,
+        reactionType: post.reactions.length > 0 ? post.reactions[0].type : undefined,
+        // Remove the reactions array to keep the response clean
+        reactions: undefined
+    }));
 }
