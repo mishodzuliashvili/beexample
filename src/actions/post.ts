@@ -5,13 +5,25 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { getUser } from "@/lib/auth";
+import {uploadFile} from "@/lib/fileUpload";
 
-// Helper to save uploaded images
 async function saveImage(file: File): Promise<string> {
-  // In a real app, you would upload to a storage service
-  // For now, we'll just return a placeholder URL
-  // This would be replaced with actual cloud storage implementation
-  return `/uploads/${Date.now()}-${file.name}`;
+  const user = await getUser({});
+
+  if (!user) {
+    throw new Error("User not authenticated");
+  }
+
+  const result = await uploadFile(file, {
+    userId: user.id,
+    folderName: "post-images"
+  });
+
+  if (!result.success || !result.filePath) {
+    throw new Error(result.error || "Failed to upload image");
+  }
+
+  return result.filePath;
 }
 
 export async function createPost(formData: FormData) {
@@ -61,9 +73,9 @@ export async function createPost(formData: FormData) {
     }
   });
   
-  if (existingPost) {
-    throw new Error("You already posted in this group today");
-  }
+  // if (existingPost) {
+  //   throw new Error("You already posted in this group today");
+  // }
   
   // Save image if provided
   let imageUrl = null;
