@@ -10,7 +10,7 @@ async function getStats() {
         await Promise.all([
             prisma.group.count(),
             prisma.groupMember.count({ where: { status: "ACTIVE" } }),
-            prisma.groupMember.count({ where: { status: "PEDNING" } }),
+            prisma.groupMember.count({ where: { status: "PENDING" } }),
             prisma.user.count(),
         ]);
 

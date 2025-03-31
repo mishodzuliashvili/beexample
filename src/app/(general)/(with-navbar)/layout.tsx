@@ -7,7 +7,10 @@ export default function GeneralLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen grid grid-rows-[auto,1fr,auto] grid-cols-1">
+        <div
+            id="top"
+            className="min-h-screen grid grid-rows-[auto,1fr,auto] grid-cols-1"
+        >
             <div>
                 <Navbar />
             </div>

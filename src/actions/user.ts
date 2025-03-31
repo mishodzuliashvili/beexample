@@ -74,13 +74,6 @@ export async function getUserFeed(options: FeedOptions = {}) {
             ...whereTypes,
         },
         include: {
-            author: {
-                select: {
-                    id: true,
-                    name: true,
-                    image: true,
-                },
-            },
             group: {
                 select: {
                     id: true,
@@ -94,7 +87,7 @@ export async function getUserFeed(options: FeedOptions = {}) {
                 },
                 select: {
                     id: true,
-                    type: true,  // Explicitly select the type field
+                    type: true, // Explicitly select the type field
                 },
                 take: 1,
             },
@@ -111,11 +104,11 @@ export async function getUserFeed(options: FeedOptions = {}) {
     });
 
     // Transform the posts to include hasReacted flag and reaction type
-    return posts.map(post => ({
+    return posts.map((post) => ({
         ...post,
-        hasReacted: post.reactions.length > 0,
-        reactionType: post.reactions.length > 0 ? post.reactions[0].type : undefined,
+        hasReacted: true,
+        reactionType: undefined,
         // Remove the reactions array to keep the response clean
-        reactions: undefined
+        reactions: undefined,
     }));
 }

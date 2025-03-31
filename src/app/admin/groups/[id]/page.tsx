@@ -48,7 +48,7 @@ export default async function GroupDetailPage({
     }
 
     const activeMembers = group.members.filter((m) => m.status === "ACTIVE");
-    const pendingMembers = group.members.filter((m) => m.status === "PEDNING");
+    const pendingMembers = group.members.filter((m) => m.status === "PENDING");
 
     const formattedDate = new Date(group.createdAt).toLocaleDateString(
         "en-US",

@@ -17,7 +17,7 @@ async function getGroups() {
                 select: {
                     members: {
                         where: {
-                            status: "PEDNING",
+                            status: "PENDING",
                         },
                     },
                 },

@@ -1,3 +1,4 @@
+import TopAppBar from "@/components/dashboard/TopAppBar";
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -9,5 +10,11 @@ export default async function Layout({
     const user = await getUser({});
     if (!user) redirect("/");
 
-    return children;
+    return (
+        <>
+            <TopAppBar user={user} />
+            {children}
+        </>
+    );
+    // return children;
 }

@@ -30,36 +30,71 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 
-  ownedGroups  OwnedGroup[]
-  joinedGroups GroupMember[]
-  posts        Post[]
-  reactions    Reaction[]
+  ownedGroups     OwnedGroup[]
+  joinedGroups    GroupMember[]
+  posts           Post[]
+  reactions       Reaction[]
+  moderatedGroups GroupModerator[]
 }
 
 enum PostType {
-  MOTIVATIONAL
-  ACHIEVEMENT
+  CONFESSION // Anonymous confession about anything
+  RANT // Emotional venting or complaints
+  QUESTION // Asking a question to the community
+  COMPLIMENT // Saying something nice about someone
+  SECRET_CRUSH // Posts about crushes or romantic feelings
+  MEME // Funny or relatable meme content
+  STORY // Longer personal stories or experiences
+  SHOUTOUT // Highlighting someone in a positive way
+  LOST_FOUND // Reporting or asking about lost/found items
+  EVENT_PROMO // Promoting events, gatherings, or activities
+  ROOMMATE_REQUEST // Looking for or offering roommate arrangements
+  COMPLAINT // Complaining about university, staff, or facilities
+  ADVICE // Asking for or giving advice
+  MOTIVATIONAL // Uplifting, inspiring messages
+  ACHIEVEMENT // Sharing personal wins or accomplishments
+  OTHER // Doesn't fit into any specific category
 }
 
 model Group {
   id String @id() @default(cuid())
 
   name  String
-  slug  String @unique
+  slug  String @unique()
   image String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
 
-  members GroupMember[]
-  owner   OwnedGroup[]
-  posts   Post[]
+  doesJoinNeedsApproval   Boolean @default(false)
+  isDiscoverable          Boolean @default(true)
+  doesPostRequireApproval Boolean @default(false)
+
+  members    GroupMember[]
+  owner      OwnedGroup[]
+  posts      Post[]
+  moderators GroupModerator[]
+}
+
+model GroupModerator {
+  id String @id() @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  group   Group  @relation(fields: [groupId], references: [id])
+  groupId String
+
+  permissions String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 }
 
 model OwnedGroup {
   id String @id() @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   group   Group  @relation(fields: [groupId], references: [id])
@@ -72,23 +107,31 @@ model OwnedGroup {
 enum GroupMemberStatus {
   ACTIVE
   BANNED
-  SUSPENDED
-  PEDNING
+  PENDING
 }
 
 model GroupMember {
   id String @id() @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   group   Group  @relation(fields: [groupId], references: [id])
   groupId String
 
-  status GroupMemberStatus @default(PEDNING)
+  status         GroupMemberStatus @default(ACTIVE)
+  suspendedUntil DateTime?
+
+  lastPostCreatedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
+}
+
+enum PostStatus {
+  ACTIVE
+  PENDING
+  DELETED
 }
 
 model Post {
@@ -104,15 +147,28 @@ model Post {
   group   Group  @relation(fields: [groupId], references: [id])
   groupId String
 
-  author    User       @relation(fields: [authorId], references: [id])
-  authorId  String
+  status PostStatus @default(ACTIVE)
+
+  // can have user or not that means it's anonymous
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
   reactions Reaction[]
+}
+
+enum ReactionType {
+  LIKE
+  LOVE
+  HAHA
+  WOW
+  SAD
+  ANGRY
 }
 
 model Reaction {
   id String @id() @default(cuid())
 
-  type String
+  type ReactionType
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt()
@@ -120,6 +176,6 @@ model Reaction {
   post   Post   @relation(fields: [postId], references: [id])
   postId String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }

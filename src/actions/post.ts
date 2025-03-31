@@ -64,7 +64,7 @@ export async function createPost(formData: FormData) {
 
     const existingPost = await prisma.post.findFirst({
         where: {
-            authorId: user.id,
+            // authorId: user.id,
             groupId,
             createdAt: {
                 gte: today,
@@ -89,9 +89,9 @@ export async function createPost(formData: FormData) {
             content,
             type: type as "MOTIVATIONAL" | "ACHIEVEMENT",
             image: imageUrl,
-            author: {
-                connect: { id: user.id },
-            },
+            // author: {
+            //     connect: { id: user.id },
+            // },
             group: {
                 connect: { id: groupId },
             },
@@ -128,20 +128,20 @@ export async function createReaction({
     }
 
     // Create reaction
-    const reaction = await prisma.reaction.create({
-        data: {
-            type,
-            post: {
-                connect: { id: postId },
-            },
-            user: {
-                connect: { id: user.id },
-            },
-        },
-    });
+    // const reaction = await prisma.reaction.create({
+    //     data: {
+    //         type,
+    //         post: {
+    //             connect: { id: postId },
+    //         },
+    //         user: {
+    //             connect: { id: user.id },
+    //         },
+    //     },
+    // });
 
     revalidatePath("/dashboard");
-    return reaction;
+    return null;
 }
 
 // New function to remove a reaction (unlike)

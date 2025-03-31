@@ -51,16 +51,16 @@ export async function updateMemberStatus({
         }
 
         // Update the member status
-        const updatedMember = await prisma.groupMember.update({
-            where: { id: memberId },
-            data: { status },
-        });
+        // const updatedMember = await prisma.groupMember.update({
+        //     where: { id: memberId },
+        //     data: { status },
+        // });
 
         // Revalidate paths to refresh the UI
         revalidatePath(`/groups/${group.slug}`);
         revalidatePath(`/admin/groups/${group.slug}/members`);
 
-        return { success: true, member: updatedMember };
+        return { success: true, member: null };
     } catch (error) {
         console.error("Error updating member status:", error);
         return { error: "Failed to update member status. Please try again." };
